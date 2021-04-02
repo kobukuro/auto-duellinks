@@ -5,3 +5,4 @@ import pyautogui
 
 if __name__ == '__main__':
     game_common.open_window()
+    game_common.close_message_windows()
