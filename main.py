@@ -25,49 +25,72 @@ if __name__ == '__main__':
     # endregion
     # game_common.close_message_windows()
     # game_common.choose_character()
-    duel_turns = 5
+
+    pyautogui.FAILSAFE = False
+    duel_turns = 1
     for i in range(duel_turns):
         print(f'duel start {i}th run')
         game_common.click_gate()
         game_common.click_duel_btn()
         game_common.skip_dialog()
         game_common.click_inner_duel_btn()
-        no_more_summon = False
+        num_already_summon = 0
+        is_finish = False
         while True:
             duel.wait_until_my_draw_phase()
             time.sleep(2)
             duel.draw_card()
             duel.wait_until_my_main_phase()
-            if not no_more_summon:
+            if num_already_summon < 3:
                 game_common.move_mouse(x=950, y=900)
                 game_common.click()
                 duel.click_normal_summon()
-                no_more_summon = True
+                num_already_summon += 1
             duel.click_option()
-            is_can_battle = duel.is_can_battle()
-            if is_can_battle:
+            game_common.move_mouse(x=0, y=0)
+            is_can_go_to_battle_phase = duel.is_can_go_to_battle_phase()
+            print(f'is_can_go_to_battle_phase: {is_can_go_to_battle_phase}')
+            num_already_attack = 0
+            if is_can_go_to_battle_phase:
                 duel.click_go_to_battle_phase()
-                game_common.move_mouse(x=950, y=600)
-                time.sleep(0.5)
-                game_common.click()
-                if duel.is_can_attack():  # 假如可以攻擊
-                    duel.click_attack()
-                    is_more_than_one_enemy = duel.is_more_than_one_enemy()
-                    if is_more_than_one_enemy:
-                        game_common.move_mouse(x=700, y=700)
+                while True:
+                    if num_already_attack == 0:
+                        game_common.move_mouse(x=950, y=600)
+                        time.sleep(0.5)
                         game_common.click()
-                        duel.click_confirm_btn()
-                    is_finish = duel.is_ok_btn_show()
-                    if is_finish:
-                        duel.click_ok_btn()
+                    elif num_already_attack == 1:  # 先右邊
+                        game_common.move_mouse(x=1050, y=600)
+                        time.sleep(0.5)
+                        game_common.click()
+                    elif num_already_attack == 2:  # 再左邊
+                        game_common.move_mouse(x=850, y=600)
+                        time.sleep(0.5)
+                        game_common.click()
+                    if duel.is_can_attack():  # 假如可以攻擊
+                        duel.click_attack()
+                        num_already_attack += 1
+                        is_more_than_one_enemy = duel.is_more_than_one_enemy()
+                        if is_more_than_one_enemy:
+                            game_common.move_mouse(x=700, y=700)
+                            game_common.click()
+                            duel.click_confirm_btn()
+                        is_finish = duel.is_ok_btn_show()
+                        if is_finish:
+                            duel.click_ok_btn()
+                            break
+                        if num_already_attack == num_already_summon:
+                            duel.click_option()
+                            duel.click_go_to_end_phase()
+                            num_already_attack = 0
+                            break
+                    else:  # 假如不能攻擊
+                        game_common.click()
+                        duel.click_option()
+                        duel.click_go_to_end_phase()
                         break
-                    duel.click_option()
-                    duel.click_go_to_end_phase()
-                else:  # 假如不能攻擊
-                    game_common.click()
-                    duel.click_option()
-                    duel.click_go_to_end_phase()
-            else:  # 不能攻擊
+                if is_finish:
+                    break
+            else:  # can not go to battle phase
                 # click button to go to end phase
                 duel.click_go_to_end_phase()
             is_need_to_discard_card = duel.is_need_to_discard_card()

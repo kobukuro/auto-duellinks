@@ -34,7 +34,7 @@ def is_more_than_one_enemy():
     return game_common.is_exists_image(file_path=image_names.select_a_target_monster_file_path)
 
 
-def is_can_battle():
+def is_can_go_to_battle_phase():
     return game_common.is_exists_image(file_path=image_names.change_to_battle_phase_file_path)
 
 
