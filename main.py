@@ -27,7 +27,9 @@ if __name__ == '__main__':
             # region everyday notify
             # everyday_notify.click_back_btn()
             # endregion
-            game_common.close_message_windows(wait_seconds_limit=30)
+            game_common.wait_until_duel_orb_show()
+            game_common.close_duel_quest_windows(wait_seconds_limit=10)
+            game_common.close_message_windows(wait_seconds_limit=10)
             game_common.click_gate(initial=True)
             # game_common.choose_character()
 
@@ -121,7 +123,8 @@ if __name__ == '__main__':
                     duel.click_event_ok_btn()
                 # endregion
                 game_common.skip_dialog()
-                game_common.close_message_windows()
+                game_common.close_duel_quest_windows(wait_seconds_limit=10)
+                game_common.close_message_windows(wait_seconds_limit=10)
                 # print(f'duel end {i}th run')
         except Exception as e:
             print(e)

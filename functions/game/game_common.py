@@ -5,6 +5,7 @@ from datetime import datetime
 
 image_names = CommonImageNames()
 
+
 def is_exists_image(file_path, wait_seconds_limit=5):
     result = False
     time_start = datetime.now()
@@ -22,11 +23,14 @@ def is_exists_image(file_path, wait_seconds_limit=5):
                 break
     return result
 
+
 def click():
     pyautogui.click()
 
+
 def move_mouse(x, y):
     pyautogui.moveTo(x, y)
+
 
 def click_image(file_path, wait_seconds_limit=60):
     time_start = datetime.now()
@@ -43,6 +47,10 @@ def click_image(file_path, wait_seconds_limit=60):
                 pyautogui.moveTo(position)
                 pyautogui.click()
                 break
+
+
+def wait_until_duel_orb_show():
+    is_exists_image(file_path=image_names.duel_orb_file_path, wait_seconds_limit=30)
 
 
 def click_gate(initial=False):
@@ -113,6 +121,21 @@ def open_window():
                 break
 
 
+def close_duel_quest_windows(wait_seconds_limit=15):
+    time_start = datetime.now()
+    while True:
+        time_now = datetime.now()
+        delta = time_now - time_start
+        delta_seconds = delta.total_seconds()
+        if delta_seconds > wait_seconds_limit:
+            break
+        message_window_close_position = pyautogui.locateCenterOnScreen(image_names.ok_btn_file_path)
+        # print(f'close_duel_quest_windows {message_window_close_position}')
+        if message_window_close_position is not None:
+            pyautogui.moveTo(message_window_close_position)
+            pyautogui.click()
+
+
 def close_message_windows(wait_seconds_limit=15):
     time_start = datetime.now()
     while True:
@@ -122,6 +145,7 @@ def close_message_windows(wait_seconds_limit=15):
         if delta_seconds > wait_seconds_limit:
             break
         message_window_close_position = pyautogui.locateCenterOnScreen(image_names.message_close_file_path)
+        # print(f'close_message_windows {message_window_close_position}')
         if message_window_close_position is not None:
             pyautogui.moveTo(message_window_close_position)
             pyautogui.click()

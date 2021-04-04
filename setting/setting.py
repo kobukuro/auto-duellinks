@@ -10,6 +10,7 @@ DUEL_PATH = 'duel\\'
 class CommonImageNames(object):
     game_logo_file_path = f'{IMAGES_PATH}{COMMON_PATH}duellinks_logo.png'
     window_title_file_path = f'{IMAGES_PATH}{COMMON_PATH}duellinks_window_title.png'
+    duel_orb_file_path = f'{IMAGES_PATH}{COMMON_PATH}duel_orb.png'
     gate_file_path = f'{IMAGES_PATH}{COMMON_PATH}gate.png'
     initial_gate_file_path = f'{IMAGES_PATH}{COMMON_PATH}gate_initial.png'
     duel_btn_file_path = f'{IMAGES_PATH}{COMMON_PATH}duel_btn.png'
