@@ -6,6 +6,7 @@ from functions.game.everyday_notify import everyday_notify
 import os
 import pyautogui
 import time
+from datetime import datetime
 
 if __name__ == '__main__':
     # os.startfile(setting.GAME_SHORTCUT_PATH)
@@ -27,8 +28,10 @@ if __name__ == '__main__':
     # game_common.choose_character()
 
     pyautogui.FAILSAFE = False
-    duel_turns = 1
+    duel_turns = 30
     for i in range(duel_turns):
+        # 目前一場4分鐘
+        print(datetime.now())
         print(f'duel start {i}th run')
         game_common.click_gate()
         game_common.click_duel_btn()
@@ -49,7 +52,7 @@ if __name__ == '__main__':
             duel.click_option()
             game_common.move_mouse(x=0, y=0)
             is_can_go_to_battle_phase = duel.is_can_go_to_battle_phase()
-            print(f'is_can_go_to_battle_phase: {is_can_go_to_battle_phase}')
+            # print(f'is_can_go_to_battle_phase: {is_can_go_to_battle_phase}')
             num_already_attack = 0
             if is_can_go_to_battle_phase:
                 duel.click_go_to_battle_phase()
@@ -99,10 +102,15 @@ if __name__ == '__main__':
                 game_common.click()
                 duel.click_confirm_btn()
         try:
-            duel.click_next_btn(wait_seconds_limit=80)  # 經驗值畫面next
+            duel.click_next_btn(wait_seconds_limit=40)  # 經驗值畫面next
         except:  # 遇到升級的時候
             game_common.click()
-            duel.click_next_btn()  # 經驗值畫面next
+            while True:  # 因為有可能一次升好幾級
+                try:
+                    duel.click_next_btn(wait_seconds_limit=10)  # 經驗值畫面next
+                    break  # 有按到next就break
+                except:
+                    game_common.click()
         duel.click_next_btn()  # duel results
         # region 活動按ok
         is_event_ok_btn_show = duel.is_event_ok_btn_show()
