@@ -9,10 +9,10 @@ import time
 from datetime import datetime
 
 if __name__ == '__main__':
+    pyautogui.FAILSAFE = False
     while True:
         try:
             os.startfile(setting.GAME_SHORTCUT_PATH)
-            time.sleep(5)
             game_common.click_start_game()
             # game_common.open_window()
             # region everyday reward
@@ -27,10 +27,10 @@ if __name__ == '__main__':
             # region everyday notify
             # everyday_notify.click_back_btn()
             # endregion
-            # game_common.close_message_windows()
+            game_common.close_message_windows(wait_seconds_limit=30)
+            game_common.click_gate(initial=True)
             # game_common.choose_character()
 
-            pyautogui.FAILSAFE = False
             duel_turns = 100
             for i in range(duel_turns):
                 # 目前一場4分鐘
@@ -123,6 +123,7 @@ if __name__ == '__main__':
                 game_common.skip_dialog()
                 game_common.close_message_windows()
                 # print(f'duel end {i}th run')
-        except:
+        except Exception as e:
+            print(e)
             os.system("TASKKILL /F /IM dlpc.exe")
             time.sleep(10)

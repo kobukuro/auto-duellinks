@@ -45,8 +45,11 @@ def click_image(file_path, wait_seconds_limit=60):
                 break
 
 
-def click_gate():
-    click_image(file_path=image_names.gate_file_path)
+def click_gate(initial=False):
+    if initial:
+        click_image(file_path=image_names.initial_gate_file_path)
+    else:
+        click_image(file_path=image_names.gate_file_path)
 
 
 def click_duel_btn():
@@ -110,13 +113,13 @@ def open_window():
                 break
 
 
-def close_message_windows():
+def close_message_windows(wait_seconds_limit=15):
     time_start = datetime.now()
     while True:
         time_now = datetime.now()
         delta = time_now - time_start
         delta_seconds = delta.total_seconds()
-        if delta_seconds > 15:
+        if delta_seconds > wait_seconds_limit:
             break
         message_window_close_position = pyautogui.locateCenterOnScreen(image_names.message_close_file_path)
         if message_window_close_position is not None:
