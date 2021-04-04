@@ -65,6 +65,8 @@ def click_go_to_end_phase():
 def is_ok_btn_show():
     return game_common.is_exists_image(file_path=image_names.ok_btn_file_path, wait_seconds_limit=20)
 
+def is_level_up_show():
+    return game_common.is_exists_image(file_path=image_names.level_up_file_path, wait_seconds_limit=20)
 
 def is_event_ok_btn_show():
     return game_common.is_exists_image(file_path=image_names.event_ok_btn_file_path, wait_seconds_limit=10)

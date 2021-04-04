@@ -47,5 +47,6 @@ class DuelImagesNames(object):
     select_a_target_monster_file_path = f'{IMAGES_PATH}{DUEL_PATH}select_a_target_monster.png'
     discard_card_file_path = f'{IMAGES_PATH}{DUEL_PATH}discard_card.png'
     ok_btn_file_path = f'{IMAGES_PATH}{DUEL_PATH}ok.png'
+    level_up_file_path = f'{IMAGES_PATH}{DUEL_PATH}level_up.png'
     next_btn_file_path = f'{IMAGES_PATH}{DUEL_PATH}next.png'
     event_ok_btn_file_path = f'{IMAGES_PATH}{DUEL_PATH}event_ok.png'
